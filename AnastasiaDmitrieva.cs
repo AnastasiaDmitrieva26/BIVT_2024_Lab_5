@@ -62,52 +62,32 @@ public class Program
         double s = Math.Sqrt(p * (p - a) * (p - b) * (p - c));
         return s;
     }
+    static double[] sort(double[] array)
+    {
+        for (int i1 = 0; i1 < array.Length; i1++)
+        {
+            for (int i = 1; i < array.Length; i++)
+            {
+ 
+                    if (array[i] < array[i - 1])
+                    {
+                        double t = array[i];
+                        array[i] = array[i - 1];
+                        array[i - 1] = t;
+
+                    }
+            }
+        }
+        return array;
+    }
 
     public int Task_1_2(double[] first, double[] second)
     {
         int answer = 0;
 
         // code here
-        int count = 0;
-        while (count < first.Length)
-        {
-            for (int i = 0; i < first.Length; i++)
-            {
-                if (i != 0)
-                {
-                    if (first[i] < first[i - 1])
-                    {
-                        double t = first[i];
-                        first[i] = first[i - 1];
-                        first[i - 1] = t;
-                        count = 0;
-
-                    }
-                    else count++;
-                }
-                else count++;
-            }
-        }
-        count = 0;
-        while (count < second.Length)
-        {
-            for (int i = 0; i < second.Length; i++)
-            {
-                if (i != 0)
-                {
-                    if (second[i] < second[i - 1])
-                    {
-                        double t = second[i];
-                        second[i] = second[i - 1];
-                        second[i - 1] = t;
-                        count = 0;
-
-                    }
-                    else count++;
-                }
-                else count++;
-            }
-        }
+        first = sort(first);
+        second = sort(second);
         if (first[0] + first[1] <= first[2] || second[0] + second[1] <= second[2]) return -1;
         // create and use GeronArea(a, b, c);
         // end
@@ -181,6 +161,18 @@ public class Program
         }
         return j;
     }
+    static double[] AB(int indexA, double[] A)
+    {
+        double s = 0; int count = 0;
+        for (int i = indexA + 1; i < A.Length; i++)
+        {
+            s += A[i];
+            count++;
+        }
+        s /= count;
+        A[indexA] = s;
+        return A;
+    }
 
     public void Task_2_2(double[] A, double[] B)
     {
@@ -192,23 +184,11 @@ public class Program
         double s = 0; int count = 0;
         if (indexA < indexB)
         {
-            for (int i = indexA + 1; i < A.Length; i++)
-            {
-                s += A[i];
-                count++;
-            }
-            s /= count;
-            A[indexA] = s;
+            A = AB(indexA, A);
         }
         else if (indexA > indexB)
         {
-            for (int i = indexB + 1; i < B.Length; i++)
-            {
-                s += B[i];
-                count++;
-            }
-            s /= count;
-            B[indexB] = s;
+            B = AB(indexB, B);
         }
         // only 1 array has to be changed!
         // end
